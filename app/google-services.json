@@ -1,0 +1,58 @@
+{
+  "project_info": {
+    "project_number": "19536666386",
+    "firebase_url": "https://mygroupchatapp-94a22.firebaseio.com",
+    "project_id": "mygroupchatapp-94a22",
+    "storage_bucket": "mygroupchatapp-94a22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19536666386:android:56a4458b420a4054",
+        "android_client_info": {
+          "package_name": "cis470.mygroupchatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19536666386-h4git60sbov8p8iqhmgjvp0neefiegc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cis470.mygroupchatapp",
+            "certificate_hash": "42e72f8a133fe85a0ec968a0f9c790181cffc104"
+          }
+        },
+        {
+          "client_id": "19536666386-dsa9p9ndlb88in2kevrl10rv6j8ceh4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvfSCWGiWIrnVl6Lut38XLG4AsCkYaxdY"
+        },
+        {
+          "current_key": "AIzaSyAeRxa5MiYXxzdvdU4n0LFDj0I85mv2cec"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19536666386-dsa9p9ndlb88in2kevrl10rv6j8ceh4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
