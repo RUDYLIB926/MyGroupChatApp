@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +21,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.scottyab.aescrypt.AESCrypt;
+
+import java.security.GeneralSecurityException;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int SIGN_IN_REQUEST_CODE = 123;
+    private static final String password = "password";
+    String TAG = "ENCRYPTION";
     private FirebaseListAdapter<ChatMessage> adapter;
 
     @Override
@@ -49,17 +55,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 EditText input = (EditText)findViewById(R.id.input);
+                String message = input.getText().toString();
+                try {
+                    String encryptedMsg = AESCrypt.encrypt(password, message);
+                    ChatMessage value = new ChatMessage(encryptedMsg,
+                            FirebaseAuth.getInstance()
+                                    .getCurrentUser()
+                                    .getDisplayName());
+                    FirebaseDatabase.getInstance()
+                            .getReference()
+                            .push()
+                            .setValue(value
+                            );
+                }catch (GeneralSecurityException e){
+                    Log.e(TAG,"There was an error decrypting the message");
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
 
-                // Read the input field and push a new instance
-                // of ChatMessage to the Firebase database
-                FirebaseDatabase.getInstance()
-                        .getReference()
-                        .push()
-                        .setValue(new ChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
 
                 // Clear the input
                 input.setText("");
@@ -132,7 +144,14 @@ public class MainActivity extends AppCompatActivity {
                 TextView messageTime = (TextView)v.findViewById(R.id.message_time);
 
                 // Set their text
-                messageText.setText(model.getMessageText());
+                try {
+                    String messageAfterDecrypt = AESCrypt.decrypt(password, model.getMessageText());
+                    messageText.setText(messageAfterDecrypt);
+                }catch (GeneralSecurityException e){
+                    Log.e(TAG,"There was an error decrypting the message");
+                    messageText.setText("There was an error decrypting this message");
+                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
                 messageUser.setText(model.getMessageUser());
 
                 // Format the date before showing it
